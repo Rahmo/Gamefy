@@ -9,11 +9,20 @@
 /* Begin PBXBuildFile section */
 		B41F193D1B0FDBC100F5AC4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41F193C1B0FDBC100F5AC4E /* AppDelegate.swift */; };
 		B41F19401B0FDBC100F5AC4E /* Gamefy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B41F193E1B0FDBC100F5AC4E /* Gamefy.xcdatamodeld */; };
-		B41F19421B0FDBC100F5AC4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41F19411B0FDBC100F5AC4E /* ViewController.swift */; };
 		B41F19451B0FDBC100F5AC4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B41F19431B0FDBC100F5AC4E /* Main.storyboard */; };
 		B41F19471B0FDBC100F5AC4E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B41F19461B0FDBC100F5AC4E /* Images.xcassets */; };
 		B41F194A1B0FDBC100F5AC4E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B41F19481B0FDBC100F5AC4E /* LaunchScreen.xib */; };
 		B41F19561B0FDBC100F5AC4E /* GamefyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41F19551B0FDBC100F5AC4E /* GamefyTests.swift */; };
+		B4274B681B165C3A0003E192 /* GamesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4274B671B165C3A0003E192 /* GamesListTableViewController.swift */; };
+		B4274B6A1B165C590003E192 /* GameDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4274B691B165C590003E192 /* GameDetailsViewController.swift */; };
+		B4274B741B16808E0003E192 /* AddGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4274B731B16808E0003E192 /* AddGameViewController.swift */; };
+		B4274B7E1B17BE2A0003E192 /* User2GamesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4274B7D1B17BE2A0003E192 /* User2GamesType.swift */; };
+		B4274B801B17BE2A0003E192 /* GameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4274B7F1B17BE2A0003E192 /* GameType.swift */; };
+		B4274B841B17BE2A0003E192 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4274B831B17BE2A0003E192 /* Game.swift */; };
+		B4274B861B17DF870003E192 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4274B851B17DF870003E192 /* User.swift */; };
+		B47019951B17E7F90001352A /* SSRadioButtonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47019931B17E7F90001352A /* SSRadioButtonsController.swift */; };
+		B47019961B17E7F90001352A /* SSRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47019941B17E7F90001352A /* SSRadioButton.swift */; };
+		B47019981B1835C60001352A /* RegisterUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47019971B1835C60001352A /* RegisterUserViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,13 +40,22 @@
 		B41F193B1B0FDBC100F5AC4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B41F193C1B0FDBC100F5AC4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B41F193F1B0FDBC100F5AC4E /* Gamefy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gamefy.xcdatamodel; sourceTree = "<group>"; };
-		B41F19411B0FDBC100F5AC4E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B41F19441B0FDBC100F5AC4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B41F19461B0FDBC100F5AC4E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B41F19491B0FDBC100F5AC4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B41F194F1B0FDBC100F5AC4E /* GamefyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamefyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B41F19541B0FDBC100F5AC4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B41F19551B0FDBC100F5AC4E /* GamefyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamefyTests.swift; sourceTree = "<group>"; };
+		B4274B671B165C3A0003E192 /* GamesListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamesListTableViewController.swift; sourceTree = "<group>"; };
+		B4274B691B165C590003E192 /* GameDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameDetailsViewController.swift; sourceTree = "<group>"; };
+		B4274B731B16808E0003E192 /* AddGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGameViewController.swift; sourceTree = "<group>"; };
+		B4274B7D1B17BE2A0003E192 /* User2GamesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User2GamesType.swift; sourceTree = "<group>"; };
+		B4274B7F1B17BE2A0003E192 /* GameType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameType.swift; sourceTree = "<group>"; };
+		B4274B831B17BE2A0003E192 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		B4274B851B17DF870003E192 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B47019931B17E7F90001352A /* SSRadioButtonsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SSRadioButtonsController.swift; path = "../../../Downloads/SSRadioButtonsController-master/SSRadioButtonController/SSRadioButtonsController.swift"; sourceTree = "<group>"; };
+		B47019941B17E7F90001352A /* SSRadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SSRadioButton.swift; path = "../../../Downloads/SSRadioButtonsController-master/SSRadioButtonController/SSRadioButton.swift"; sourceTree = "<group>"; };
+		B47019971B1835C60001352A /* RegisterUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterUserViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,13 +97,22 @@
 		B41F19391B0FDBC100F5AC4E /* Gamefy */ = {
 			isa = PBXGroup;
 			children = (
+				B47019931B17E7F90001352A /* SSRadioButtonsController.swift */,
+				B47019941B17E7F90001352A /* SSRadioButton.swift */,
+				B4274B831B17BE2A0003E192 /* Game.swift */,
+				B4274B851B17DF870003E192 /* User.swift */,
+				B4274B7F1B17BE2A0003E192 /* GameType.swift */,
+				B4274B7D1B17BE2A0003E192 /* User2GamesType.swift */,
 				B41F193C1B0FDBC100F5AC4E /* AppDelegate.swift */,
-				B41F19411B0FDBC100F5AC4E /* ViewController.swift */,
 				B41F19431B0FDBC100F5AC4E /* Main.storyboard */,
 				B41F19461B0FDBC100F5AC4E /* Images.xcassets */,
 				B41F19481B0FDBC100F5AC4E /* LaunchScreen.xib */,
 				B41F193E1B0FDBC100F5AC4E /* Gamefy.xcdatamodeld */,
 				B41F193A1B0FDBC100F5AC4E /* Supporting Files */,
+				B4274B671B165C3A0003E192 /* GamesListTableViewController.swift */,
+				B4274B691B165C590003E192 /* GameDetailsViewController.swift */,
+				B4274B731B16808E0003E192 /* AddGameViewController.swift */,
+				B47019971B1835C60001352A /* RegisterUserViewController.swift */,
 			);
 			path = Gamefy;
 			sourceTree = "<group>";
@@ -215,7 +242,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B41F19421B0FDBC100F5AC4E /* ViewController.swift in Sources */,
+				B4274B681B165C3A0003E192 /* GamesListTableViewController.swift in Sources */,
+				B47019951B17E7F90001352A /* SSRadioButtonsController.swift in Sources */,
+				B4274B841B17BE2A0003E192 /* Game.swift in Sources */,
+				B4274B6A1B165C590003E192 /* GameDetailsViewController.swift in Sources */,
+				B47019981B1835C60001352A /* RegisterUserViewController.swift in Sources */,
+				B4274B801B17BE2A0003E192 /* GameType.swift in Sources */,
+				B47019961B17E7F90001352A /* SSRadioButton.swift in Sources */,
+				B4274B741B16808E0003E192 /* AddGameViewController.swift in Sources */,
+				B4274B861B17DF870003E192 /* User.swift in Sources */,
+				B4274B7E1B17BE2A0003E192 /* User2GamesType.swift in Sources */,
 				B41F19401B0FDBC100F5AC4E /* Gamefy.xcdatamodeld in Sources */,
 				B41F193D1B0FDBC100F5AC4E /* AppDelegate.swift in Sources */,
 			);
@@ -415,6 +451,7 @@
 				B41F195B1B0FDBC100F5AC4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B41F195C1B0FDBC100F5AC4E /* Build configuration list for PBXNativeTarget "GamefyTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +460,7 @@
 				B41F195E1B0FDBC100F5AC4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

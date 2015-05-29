@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Game" representedClassName="PRODUCT_MODULE_NAME.Game" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spots" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="gametype" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameType" inverseName="games" inverseEntity="GameType" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="games" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="GameType" representedClassName="PRODUCT_MODULE_NAME.GameType" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Game" inverseName="gametype" inverseEntity="Game" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="PRODUCT_MODULE_NAME.User" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="games" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Game" inverseName="user" inverseEntity="Game" syncable="YES"/>
+    </entity>
+    <entity name="User2GameType" representedClassName="PRODUCT_MODULE_NAME.User2GamesType" syncable="YES">
+        <attribute name="gid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Game" positionX="-144" positionY="-297" width="288" height="133"/>
+        <element name="GameType" positionX="-108" positionY="56" width="128" height="88"/>
+        <element name="User" positionX="261" positionY="-135" width="128" height="148"/>
+        <element name="User2GameType" positionX="216" positionY="-282" width="128" height="73"/>
+    </elements>
 </model>
