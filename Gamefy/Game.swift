@@ -20,3 +20,5 @@ class Game: NSManagedObject {
     @NSManaged var user: User
 
 }
+
+

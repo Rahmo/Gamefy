@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+import Foundation
 
 class RegisterUserViewController: UIViewController {
 
@@ -16,7 +18,24 @@ class RegisterUserViewController: UIViewController {
     @IBOutlet weak var btnBasketball : UIButton!
     
     @IBOutlet weak var btnSubmit: UIButton!
+    
+    
+    @IBOutlet weak var txtUserName: UITextField!
+    
+    @IBOutlet weak var txtPassword: UITextField!
+    
+    @IBOutlet weak var txtFullName: UITextField!
+    
+    @IBOutlet weak var txtAddress: UITextField!
+    
+    @IBOutlet weak var txtPhone: UITextField!
+    
     var radioButtonController = SSRadioButtonsController()
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,13 +53,24 @@ class RegisterUserViewController: UIViewController {
 
     @IBAction func SubmitPressed(sender: AnyObject) {
         
-        var currentbuttons = radioButtonController.selectedButtons()
+    
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+
+//    func textFieldShouldReturn(textField: UITextField!) -> Bool // called when 'return' key pressed. return NO to ignore.
+//    {
+//        textField.resignFirstResponder()
+//        return true;
+//    }
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        self.view.endEditing(true);
+        return false;
+    }
 
     /*
     // MARK: - Navigation
@@ -51,5 +81,24 @@ class RegisterUserViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        //         Get the new view controller using segue.destinationViewController.
+        //         Pass the selected object to the new view controller.
+        var currentbuttons = radioButtonController.selectedButtons()
+        var interests = radioButtonController.getValOfinterests(currentbuttons!)
+        
+        
+        var user: UserModel = UserModel()
+        user.name = txtFullName.text
+        user.userName = txtUserName.text
+        user.password = txtPassword.text
+        user.address = txtAddress.text
+        user.phone = txtPhone.text
+       
+        
+        let loginViewController = segue.destinationViewController as! LoginViewController
+       // var txt = txtGameName.text
+       loginViewController.save(user)
+    }
 
 }

@@ -9,21 +9,49 @@
 import UIKit
 import CoreData
 
-class GamesListTableViewController: UITableViewController {
-   
+class GamesListTableViewController: UITableViewController ,UISearchBarDelegate ,UISearchDisplayDelegate ,UITableViewDataSource , UITableViewDelegate ,UISearchResultsUpdating{
+    
+    //[String]()
+    
+    var normalGames :NSArray = NSArray()
+    var FilteredGames: NSArray = NSArray()
+    
+    
+    var resultSearchController = UISearchController()
+    @IBOutlet var tblView: UITableView!
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            return controller
+        })()
+         self.tableView.reloadData()
+        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
 
-        
+        setupGameTypes()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-
+        
+        
+        
+      
+         normalGames  = getAllGames()
+         FilteredGames = getfilteredGames()
         
         
         ///This  part below to refrsh the list after adding "pull down to refresh control "
@@ -33,6 +61,9 @@ class GamesListTableViewController: UITableViewController {
       
     }
 
+    
+    
+    
     func didRefreshCells(){
     
     self.tableView.reloadData()
@@ -44,18 +75,62 @@ class GamesListTableViewController: UITableViewController {
     
     }
     
-    @IBAction func save(sender: AnyObject) {
+    func updateSearchResultsForSearchController(searchController: UISearchController)
+    {
+        FilteredGames = NSArray()
+        
+         let predicate = NSPredicate(format: "SELF.gametype.name CONTAINS %@", searchController.searchBar.text)
+            self.FilteredGames = normalGames.filteredArrayUsingPredicate(predicate)
+        
+            
+            self.tableView.reloadData()
+        
+        
+//        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text)
+//        let array = normalGames.filteredArrayUsingPredicate(searchPredicate)
+//        FilteredGames = array as! [String]
+     
+    }
+    @IBAction func save(Igame: GameModel,selectedGameType: GameType) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
-        
+//        var user : User = User()
         let entity =  NSEntityDescription.entityForName("Game", inManagedObjectContext:managedContext)
+        let userEntity =  NSEntityDescription.entityForName("User", inManagedObjectContext:managedContext)
+         let game = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
+        
+        if let name = defaults.stringForKey("userNameKey")
+        {
+            
+            println(name)
+            let Pwd = defaults.stringForKey("userPwd")
+        
+         let fetchRequest = NSFetchRequest(entityName: "User")
+           // var predicate = NSPredicate(format: "name = %@", "Claire")
+        let userPredicate = NSPredicate(format: "userName = %@ && password = %@ ", name , Pwd!)
+        fetchRequest.predicate = userPredicate
+        
+        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [NSManagedObject] {
+           
+            for result in fetchResults as! [User] {
+               game.setValue(result, forKey: "user") //here to set the user for the game
+
+//                println(result)
+//                println(result.valueForKey("userName")!)
+//                println(result.valueForKey("password")!)
+            }
+       
+        }
+        
+        }
         
         
-        let game = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
-        
+       
         // Set all of the song attributes
-        game.setValue(sender, forKey: "name")
-        game.setValue("new album", forKey: "location")
+        game.setValue(Igame.name, forKey: "name")
+        game.setValue(Igame.location, forKey: "location")
+           game.setValue(Igame.spots, forKey: "spots")
+           game.setValue(selectedGameType, forKey: "gametype")
         
         // Save context
         var error: NSError?
@@ -64,10 +139,50 @@ class GamesListTableViewController: UITableViewController {
         }
         
       
-         println(getAllGames())
-     //   println(game)
+         //println(getAllGames())
+       println(game)
     }
     
+    func setupGameTypes(){
+    
+        
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        
+        
+        let fetchRequest = NSFetchRequest(entityName: "GameType")
+        
+        // Execute the fetch request, and cast the results to an array of LogItem objects
+        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [NSManagedObject] {
+        //do nothing
+           if (fetchResults.count == 0) && !(fetchResults.count > 3) {
+        let entity =  NSEntityDescription.entityForName("GameType", inManagedObjectContext:managedContext)
+        
+        let gameSoccer = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
+        let gameTennis = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
+        let gameVolleyball = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
+        let gameBasketball = NSManagedObject(entity: entity!, insertIntoManagedObjectContext:managedContext)
+            
+         gameSoccer.setValue("Soccer", forKey: "name")
+         gameTennis.setValue("Tennis", forKey: "name")
+         gameVolleyball.setValue("Volleyball", forKey: "name")
+         gameBasketball.setValue("Basketball", forKey: "name")
+            gameSoccer.setValue(1, forKey: "id")
+            gameTennis.setValue(2, forKey: "id")
+            gameVolleyball.setValue(3, forKey: "id")
+            gameBasketball.setValue(4, forKey: "id")
+        // Save context
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save \(error), \(error?.userInfo)")
+            }
+        }
+        }
+    
+
+    
+    }
     
     
 
@@ -90,8 +205,15 @@ class GamesListTableViewController: UITableViewController {
             
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        var resCount :Int = getAllGames().count
-        return resCount
+        if (self.resultSearchController.active) {
+            //var resCount :Int = getfilteredGames().count
+            return FilteredGames.count
+        }
+        else{
+           // var resCount :Int = normalGame.count
+            return normalGames.count
+        }
+     
     }
     
         func getAllGames()-> NSArray { //Fetech result (executeFetchRequest) return an NSArray
@@ -102,12 +224,30 @@ class GamesListTableViewController: UITableViewController {
             
             let fetchRequest = NSFetchRequest(entityName: "Game")
             
+         
             // Execute the fetch request, and cast the results to an array of LogItem objects
             if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [NSManagedObject] {
                 return fetchResults
             }
             return empty
     
+    }
+    
+    func getfilteredGames()-> NSArray { //Fetech result (executeFetchRequest) return an NSArray
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        
+        let empty: NSArray = NSArray()
+       
+        let fetchRequest = NSFetchRequest(entityName: "Game")
+         let GemetypePredicate = NSPredicate(format: "gametype.name = %@", "Volleyball")
+        fetchRequest.predicate = GemetypePredicate
+        // Execute the fetch request, and cast the results to an array of LogItem objects
+        if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [NSManagedObject] {
+            return fetchResults
+        }
+        return empty
+        
     }
     
             func getEntity(number: Int) -> NSManagedObject {
@@ -136,21 +276,69 @@ class GamesListTableViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("GameCell", forIndexPath: indexPath) as! UITableViewCell //we refer to the cell
+        let cell : customCell = tableView.dequeueReusableCellWithIdentifier("GameCell", forIndexPath: indexPath) as! customCell //we refer to the cell
+  
+        if (self.resultSearchController.active) {
+//            cell.textLabel?.text = filteredTableData[indexPath.row]
+//            
+//            return cell
 
+            let indexSelection: Int  = indexPath.row //to convert indexath to Int
+            let game: NSManagedObject = getEntity(indexSelection)
+            
+            var spots = game.valueForKey("spots") as? NSNumber
+            var location = game.valueForKey("location") as? String
+            //var gametype =
+            var user = game.valueForKey("user") as? String
+            var gameTitle = game.valueForKey("name") as? String
+            // cell.textLabel!.text = game.valueForKey("name") as? String
+            cell.txtTitle!.text = "Title: \(gameTitle!) "
+            cell.txtLocation!.text = "Location: \(location!) "
+            //cell.txtLocation.text = game.valueForKey("name") as? String
+            
+            cell.txtspots!.text = "spots: \(spots!) "
+            cell.txtGameType!.text = game.valueForKey("gametype")?.valueForKey("name") as? String
+            
+            
+            // let feed: FeedModel = feeds[indexPath.row]
+            
+            return cell
+
+        }
+        else {
+//            cell.textLabel?.text = tableData[indexPath.row]
+//            
+//            return cell
+            let indexSelection: Int  = indexPath.row //to convert indexath to Int
+            let game: NSManagedObject = getEntity(indexSelection)
+            
+            var spots = game.valueForKey("spots") as? NSNumber
+            var location = game.valueForKey("location") as? String
+            //var gametype =
+            var user = game.valueForKey("user") as? String
+            var gameTitle = game.valueForKey("name") as? String
+            // cell.textLabel!.text = game.valueForKey("name") as? String
+            cell.txtTitle!.text = "Title: \(gameTitle!) "
+            cell.txtLocation!.text = "Location: \(location!) "
+            //cell.txtLocation.text = game.valueForKey("name") as? String
+            
+            cell.txtspots!.text = "spots: \(spots!) "
+            cell.txtGameType!.text = game.valueForKey("gametype")?.valueForKey("name") as? String
+            
+            
+            // let feed: FeedModel = feeds[indexPath.row]
+            
+            return cell
+
+        }
+        //self.tblView.dataSource
         
-       // let feed: FeedModel = feeds[indexPath.row]
-        let indexSelection: Int  = indexPath.row //to convert indexath to Int
-        let game: NSManagedObject = getEntity(indexSelection)
-        
-        cell.textLabel!.text = game.valueForKey("name") as? String
-       
-     
-    
-        return cell
-    
     }
 
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

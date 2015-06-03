@@ -17,3 +17,5 @@ class GameType: NSManagedObject {
     @NSManaged var games: NSSet
 
 }
+
+
