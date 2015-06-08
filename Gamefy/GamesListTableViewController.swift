@@ -23,10 +23,13 @@ class GamesListTableViewController: UITableViewController ,UISearchBarDelegate ,
     let defaults = NSUserDefaults.standardUserDefaults()
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
             controller.searchResultsUpdater = self
+            controller.searchBar.delegate = self
             controller.dimsBackgroundDuringPresentation = false
             controller.searchBar.sizeToFit()
             
@@ -51,7 +54,8 @@ class GamesListTableViewController: UITableViewController ,UISearchBarDelegate ,
         
       
          normalGames  = getAllGames()
-         FilteredGames = getfilteredGames()
+        FilteredGames = getfilteredGames()
+
         
         
         ///This  part below to refrsh the list after adding "pull down to refresh control "
@@ -71,16 +75,35 @@ class GamesListTableViewController: UITableViewController ,UISearchBarDelegate ,
     self.refreshControl?.endRefreshing()
     }
     
-    @IBAction func RetrieveNewGame(segue:UIStoryboardSegue ){
+//    @IBAction func RetrieveNewGame(segue:UIStoryboardSegue ){
+//    
+//    }
     
+    @IBAction func unwindToMainMenu(sender: UIStoryboardSegue)
+    {
+        let sourceViewController: AnyObject = sender.sourceViewController
+        // Pull any data from the view controller which initiated the unwind segue.
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
+        
+        
+        
+        
         FilteredGames = NSArray()
         
-         let predicate = NSPredicate(format: "SELF.gametype.name CONTAINS %@", searchController.searchBar.text)
-            self.FilteredGames = normalGames.filteredArrayUsingPredicate(predicate)
+        
+        
+        
+        //
+
+        //
+        
+         let predicate = NSPredicate(format: "SELF.gametype.name CONTAINS[c] %@","Basketball")
+        
+        //searchController.searchBar.text
+            FilteredGames = normalGames.filteredArrayUsingPredicate(predicate)
         
             
             self.tableView.reloadData()
@@ -207,11 +230,12 @@ class GamesListTableViewController: UITableViewController ,UISearchBarDelegate ,
         // Return the number of rows in the section.
         if (self.resultSearchController.active) {
             //var resCount :Int = getfilteredGames().count
-            return FilteredGames.count
+          var name =  self.FilteredGames[0].name
+            return self.FilteredGames.count
         }
         else{
            // var resCount :Int = normalGame.count
-            return normalGames.count
+            return self.normalGames.count
         }
      
     }
@@ -240,7 +264,7 @@ class GamesListTableViewController: UITableViewController ,UISearchBarDelegate ,
         let empty: NSArray = NSArray()
        
         let fetchRequest = NSFetchRequest(entityName: "Game")
-         let GemetypePredicate = NSPredicate(format: "gametype.name = %@", "Volleyball")
+         let GemetypePredicate = NSPredicate(format:  "SELF.gametype.name CONTAINS[c] %@","Basketball")
         fetchRequest.predicate = GemetypePredicate
         // Execute the fetch request, and cast the results to an array of LogItem objects
         if let fetchResults = managedContext.executeFetchRequest(fetchRequest, error: nil) as? [NSManagedObject] {
@@ -276,69 +300,81 @@ class GamesListTableViewController: UITableViewController ,UISearchBarDelegate ,
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : customCell = tableView.dequeueReusableCellWithIdentifier("GameCell", forIndexPath: indexPath) as! customCell //we refer to the cell
+//        
+//        var cell = self.tableView.dequeueReusableCellWithIdentifier("GameCell") as! customCell
+        let cell : customCell = self.tableView.dequeueReusableCellWithIdentifier("GameCell", forIndexPath: indexPath) as! customCell //we refer to the cell
   
-        if (self.resultSearchController.active) {
-//            cell.textLabel?.text = filteredTableData[indexPath.row]
-//            
-//            return cell
-
-            let indexSelection: Int  = indexPath.row //to convert indexath to Int
-            let game: NSManagedObject = getEntity(indexSelection)
-            
-            var spots = game.valueForKey("spots") as? NSNumber
-            var location = game.valueForKey("location") as? String
-            //var gametype =
-            var user = game.valueForKey("user") as? String
-            var gameTitle = game.valueForKey("name") as? String
-            // cell.textLabel!.text = game.valueForKey("name") as? String
-            cell.txtTitle!.text = "Title: \(gameTitle!) "
-            cell.txtLocation!.text = "Location: \(location!) "
-            //cell.txtLocation.text = game.valueForKey("name") as? String
-            
-            cell.txtspots!.text = "spots: \(spots!) "
-            cell.txtGameType!.text = game.valueForKey("gametype")?.valueForKey("name") as? String
-            
-            
-            // let feed: FeedModel = feeds[indexPath.row]
-            
-            return cell
-
-        }
-        else {
+      
 //            cell.textLabel?.text = tableData[indexPath.row]
 //            
 //            return cell
+//        if (self.searchres.active) {
+//        
+//        }
+//        else
+//        {
+//        
+//        }
             let indexSelection: Int  = indexPath.row //to convert indexath to Int
             let game: NSManagedObject = getEntity(indexSelection)
             
             var spots = game.valueForKey("spots") as? NSNumber
             var location = game.valueForKey("location") as? String
             //var gametype =
-            var user = game.valueForKey("user") as? String
+            var user = game.valueForKey("user")?.valueForKey("userName") as? String
+
             var gameTitle = game.valueForKey("name") as? String
             // cell.textLabel!.text = game.valueForKey("name") as? String
             cell.txtTitle!.text = "Title: \(gameTitle!) "
-            cell.txtLocation!.text = "Location: \(location!) "
+            cell.txtLocation!.text = "\(location!) "
             //cell.txtLocation.text = game.valueForKey("name") as? String
-            
+             cell.txtUser!.text = "user: \(user!) "
             cell.txtspots!.text = "spots: \(spots!) "
             cell.txtGameType!.text = game.valueForKey("gametype")?.valueForKey("name") as? String
             
             
             // let feed: FeedModel = feeds[indexPath.row]
-            
+        
+    
             return cell
 
-        }
+        
         //self.tblView.dataSource
         
     }
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+ 
+        let indexSelection: Int  = indexPath.row //to convert indexath to Int
+        let game: NSManagedObject = getEntity(indexSelection)
+        
+        
+        var spots = game.valueForKey("spots") as? NSNumber
+        var location = game.valueForKey("location") as? String
+        var name = game.valueForKey("user")?.valueForKey("name") as? String
+        var gameTitle = game.valueForKey("name") as? String
+        var phone = game.valueForKey("user")?.valueForKey("phone") as? String
+        var address = game.valueForKey("user")?.valueForKey("address") as? String
 
-    
-    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        var gameDetailsViewController : GameDetailsViewController = self.storyboard!.instantiateViewControllerWithIdentifier("GamedetailedID") as! GameDetailsViewController
+        
+        gameDetailsViewController.gameLocation = location!
+        gameDetailsViewController.gameName = gameTitle!
+        gameDetailsViewController.gameSpots = spots!
+        gameDetailsViewController.name = name!
+        gameDetailsViewController.address = address!
+        gameDetailsViewController.phone = phone!
+        
+        self.presentViewController(gameDetailsViewController, animated: true, completion: nil)
+      //  self.tblView.reloadData()
+        
+     
         
     }
+//    
+//    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+//        
+//    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

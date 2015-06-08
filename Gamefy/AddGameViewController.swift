@@ -10,21 +10,29 @@ import UIKit
 import CoreData
 class AddGameViewController: UIViewController,UIPickerViewDelegate {
     
+    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var BtnAdd: UIButton!
     @IBOutlet weak var txtSpots: UITextField!
     @IBOutlet weak var txtLocation: UITextField!
+    @IBOutlet weak var txtGameName: UITextField!
+    
     
     var selectedGameType : GameType? = GameType?()
   
     
     var games: NSArray = NSArray()
-    @IBOutlet weak var txtGameName: UITextField!
+
     override func viewDidLoad() {
+        
+    
+        //pickerView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         getCurrentUser()
         super.viewDidLoad()
         games = getAllGamesTypes()
 
         // Do any additional setup after loading the view.
     }
+ 
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -105,18 +113,24 @@ class AddGameViewController: UIViewController,UIPickerViewDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 //         Get the new view controller using segue.destinationViewController.
 //         Pass the selected object to the new view controller.
-       
-     
-        var game : GameModel = GameModel()
+//        if segue.identifier == "Game2List"
+//        {
+        
+         var game : GameModel = GameModel()
         game.name = txtGameName.text
         
        // game.gametype = (selectedGameType! as? GameType)!
         game.spots = txtSpots.text.toInt()!
         game.location = txtLocation.text
-        
+       
         let gamesListTableViewController = segue.destinationViewController as! GamesListTableViewController
        // var txt = txtGameName.text
         gamesListTableViewController.save(game,selectedGameType: selectedGameType!)
+//              dismissViewControllerAnimated(true, completion: nil)
+//           gamesListTableViewController.delegate=self
+       // }
+     
+       
     }
 
 
